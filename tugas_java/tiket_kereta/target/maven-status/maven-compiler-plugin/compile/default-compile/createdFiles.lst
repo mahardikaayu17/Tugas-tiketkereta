@@ -1,0 +1,7 @@
+com\tiket\model\Tiket.class
+com\tiket\main\App.class
+com\tiket\service\Pembayaran.class
+com\tiket\service\PembayaranCash.class
+com\tiket\model\TiketEkonomi.class
+com\tiket\service\PembayaranOnline.class
+com\tiket\model\TiketBisnis.class
