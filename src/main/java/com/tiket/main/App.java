@@ -45,7 +45,7 @@ public class App {
         bayarOnline2.prosesPembayaran(tiket2.hitungHarga());
         bayarOnline3.prosesPembayaran(tiket3.hitungHarga());
 
-        // CONTOH POLYMORPHISM
+        // CONTOH POLYMORPHISM KONSEP OOP DI MANA SATU METHOD DAPAT MEMILIKI BANYAK BENTUK ATAU PERILAKU BERBEDA
         System.out.println("\n===== POLYMORPHISM =====");
         Pembayaran pembayaran;
 
