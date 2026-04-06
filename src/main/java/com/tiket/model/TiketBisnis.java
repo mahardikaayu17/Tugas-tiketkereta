@@ -2,12 +2,12 @@ package com.tiket.model;
 
 public class TiketBisnis extends Tiket {
 
-    public TiketBisnis(String idTiket, String namaPenumpang, double harga) {
-        super(idTiket, namaPenumpang, harga);
+    public TiketBisnis(String kodeTiket, String namaPenumpang, double harga, String kotaTujuan) {
+        super(kodeTiket, namaPenumpang, harga, kotaTujuan);
     }
 
     @Override
     public double hitungHarga() {
-        return getHarga() + 50000; // tambahan biaya bisnis
+        return harga + (harga * 0.2); // contoh: ada tambahan 20%
     }
 }

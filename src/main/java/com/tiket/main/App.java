@@ -11,24 +11,36 @@ public class App {
     public static void main(String[] args) {
 
         // DATA TIKET
-        Tiket tiket1 = new TiketEkonomi("T001", "Mahardika", 100000);
-        Tiket tiket2 = new TiketBisnis("T002", "Ayu", 150000);
-        Tiket tiket3 = new TiketEkonomi("T003", "Widayanti", 120000);
+        Tiket tiket1 = new TiketEkonomi("T001", "Mahardika", 100000, "Bandung");
+        Tiket tiket2 = new TiketBisnis("T002", "Ayu", 150000, "Jakarta");
+        Tiket tiket3 = new TiketEkonomi("T003", "Widayanti", 120000, "Surabaya");
+
+        double totalHarga = 0;
 
         // OUTPUT DATA TIKET
         System.out.println("===== DATA TIKET =====");
+
         System.out.println("Penumpang: " + tiket1.getNamaPenumpang());
-        System.out.println("Harga Tiket Ekonomi: " + tiket1.hitungHarga());
+        System.out.println("Tujuan: " + tiket1.getKotaTujuan());
+        System.out.println("Harga: " + tiket1.hitungHarga());
+        totalHarga += tiket1.hitungHarga();
 
         System.out.println();
 
         System.out.println("Penumpang: " + tiket2.getNamaPenumpang());
-        System.out.println("Harga Tiket Bisnis: " + tiket2.hitungHarga());
+        System.out.println("Tujuan: " + tiket2.getKotaTujuan());
+        System.out.println("Harga: " + tiket2.hitungHarga());
+        totalHarga += tiket2.hitungHarga();
 
         System.out.println();
 
         System.out.println("Penumpang: " + tiket3.getNamaPenumpang());
-        System.out.println("Harga Tiket Ekonomi: " + tiket3.hitungHarga());
+        System.out.println("Tujuan: " + tiket3.getKotaTujuan());
+        System.out.println("Harga: " + tiket3.hitungHarga());
+        totalHarga += tiket3.hitungHarga();
+
+        // TOTAL
+        System.out.println("\nTotal Semua Tiket: " + totalHarga);
 
         // PEMBAYARAN CASH
         System.out.println("\n===== PEMBAYARAN CASH =====");
@@ -45,7 +57,7 @@ public class App {
         bayarOnline2.prosesPembayaran(tiket2.hitungHarga());
         bayarOnline3.prosesPembayaran(tiket3.hitungHarga());
 
-        // CONTOH POLYMORPHISM KONSEP OOP DI MANA SATU METHOD DAPAT MEMILIKI BANYAK BENTUK ATAU PERILAKU BERBEDA
+        // POLYMORPHISM
         System.out.println("\n===== POLYMORPHISM =====");
         Pembayaran pembayaran;
 

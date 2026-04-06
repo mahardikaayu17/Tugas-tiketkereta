@@ -1,31 +1,25 @@
 package com.tiket.model;
 
 public abstract class Tiket {
+    protected String kodeTiket;
+    protected String namaPenumpang;
+    protected double harga;
+    protected String kotaTujuan; // tambahan
 
-    private String idTiket;
-    private String namaPenumpang;
-    private double harga;
-
-    // Constructor
-    public Tiket(String idTiket, String namaPenumpang, double harga) {
-        this.idTiket = idTiket;
+    public Tiket(String kodeTiket, String namaPenumpang, double harga, String kotaTujuan) {
+        this.kodeTiket = kodeTiket;
         this.namaPenumpang = namaPenumpang;
         this.harga = harga;
-    }
-
-    // Getter (Encapsulation)
-    public String getIdTiket() {
-        return idTiket;
+        this.kotaTujuan = kotaTujuan;
     }
 
     public String getNamaPenumpang() {
         return namaPenumpang;
     }
 
-    public double getHarga() {
-        return harga;
+    public String getKotaTujuan() {
+        return kotaTujuan;
     }
 
-    // Abstract method (Abstraction)
     public abstract double hitungHarga();
 }
