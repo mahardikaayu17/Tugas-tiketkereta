@@ -8,6 +8,6 @@ public class TiketEkonomi extends Tiket {
 
     @Override
     public double hitungHarga() {
-        return harga; // tanpa tambahan
+        return harga; 
     }
 }

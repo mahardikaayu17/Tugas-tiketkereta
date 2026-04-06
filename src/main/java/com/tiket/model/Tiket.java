@@ -4,7 +4,7 @@ public abstract class Tiket {
     protected String kodeTiket;
     protected String namaPenumpang;
     protected double harga;
-    protected String kotaTujuan; // tambahan
+    protected String kotaTujuan; 
 
     public Tiket(String kodeTiket, String namaPenumpang, double harga, String kotaTujuan) {
         this.kodeTiket = kodeTiket;
