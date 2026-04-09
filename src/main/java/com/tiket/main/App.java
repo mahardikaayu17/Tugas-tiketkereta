@@ -1,70 +1,99 @@
 package com.tiket.main;
 
-import com.tiket.model.Tiket;
-import com.tiket.model.TiketEkonomi;
-import com.tiket.model.TiketBisnis;
-import com.tiket.service.Pembayaran;
-import com.tiket.service.PembayaranCash;
-import com.tiket.service.PembayaranOnline;
+import com.tiket.model.*;
+import com.tiket.service.*;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
 
-        // DATA TIKET
-        Tiket tiket1 = new TiketEkonomi("T001", "Mahardika", 100000, "Bandung");
-        Tiket tiket2 = new TiketBisnis("T002", "Ayu", 150000, "Jakarta");
-        Tiket tiket3 = new TiketEkonomi("T003", "Widayanti", 120000, "Surabaya");
+        Scanner input = new Scanner(System.in);
 
-        double totalHarga = 0;
+   
+        // INPUT NAMA
+        System.out.print("Masukkan Nama Penumpang: ");
+        String nama = input.nextLine();
 
-        // OUTPUT DATA TIKET
-        System.out.println("===== DATA TIKET =====");
+        // DATA KERETA (MAP)
+        Map<String, Kereta> daftarKereta = new HashMap<>();
+        daftarKereta.put("K1", new Kereta("K1", "Argo", "Bandung", 100000, "Ekonomi"));
+        daftarKereta.put("K2", new Kereta("K2", "Bima", "Jakarta", 150000, "Bisnis"));
+        daftarKereta.put("K3", new Kereta("K3", "Sancaka", "Surabaya", 120000, "Ekonomi"));
 
-        System.out.println("Penumpang: " + tiket1.getNamaPenumpang());
-        System.out.println("Tujuan: " + tiket1.getKotaTujuan());
-        System.out.println("Harga: " + tiket1.hitungHarga());
-        totalHarga += tiket1.hitungHarga();
+        // TAMPILKAN DAFTAR KERETA
+        System.out.println("\n===== DAFTAR KERETA =====");
+        for (Kereta k : daftarKereta.values()) {
+            System.out.println(k.getKode() + " | " + k.getNama()
+                    + " | " + k.getJenis()
+                    + " | " + k.getTujuan()
+                    + " | Rp " + k.getHarga());
+        }
 
-        System.out.println();
+       
+        // PILIH KERETA
+        
+        System.out.print("Pilih kode kereta: ");
+        String kode = input.nextLine().trim().toUpperCase();
 
-        System.out.println("Penumpang: " + tiket2.getNamaPenumpang());
-        System.out.println("Tujuan: " + tiket2.getKotaTujuan());
-        System.out.println("Harga: " + tiket2.hitungHarga());
-        totalHarga += tiket2.hitungHarga();
+        Kereta k = daftarKereta.get(kode);
 
-        System.out.println();
+        if (k == null) {
+            System.out.println("Kode kereta tidak ditemukan!");
+            return;
+        }
 
-        System.out.println("Penumpang: " + tiket3.getNamaPenumpang());
-        System.out.println("Tujuan: " + tiket3.getKotaTujuan());
-        System.out.println("Harga: " + tiket3.hitungHarga());
-        totalHarga += tiket3.hitungHarga();
 
-        // TOTAL
-        System.out.println("\nTotal Semua Tiket: " + totalHarga);
+        //BUAT TIKET OTOMATIS
 
-        // PEMBAYARAN CASH
-        System.out.println("\n===== PEMBAYARAN CASH =====");
-        Pembayaran bayarCash = new PembayaranCash();
-        bayarCash.prosesPembayaran(tiket2.hitungHarga());
+        Tiket tiket;
 
-        // PEMBAYARAN ONLINE
-        System.out.println("\n===== PEMBAYARAN ONLINE =====");
-        Pembayaran bayarOnline1 = new PembayaranOnline("OVO");
-        Pembayaran bayarOnline2 = new PembayaranOnline("DANA");
-        Pembayaran bayarOnline3 = new PembayaranOnline("GOPAY");
+        if (k.getJenis().equalsIgnoreCase("Ekonomi")) {
+            tiket = new TiketEkonomi("T001", nama, k.getHarga(), k.getTujuan());
+        } else {
+            tiket = new TiketBisnis("T002", nama, k.getHarga(), k.getTujuan());
+        }
 
-        bayarOnline1.prosesPembayaran(tiket1.hitungHarga());
-        bayarOnline2.prosesPembayaran(tiket2.hitungHarga());
-        bayarOnline3.prosesPembayaran(tiket3.hitungHarga());
+        double total = tiket.hitungHarga();
 
-        // POLYMORPHISM
-        System.out.println("\n===== POLYMORPHISM =====");
+
+        // OUTPUT DATA
+        System.out.println("\n===== DATA TIKET =====");
+        System.out.println("Nama   : " + nama);
+        System.out.println("Kereta : " + k.getNama());
+        System.out.println("Tujuan : " + k.getTujuan());
+        System.out.println("Jenis  : " + k.getJenis());
+        System.out.println("Total  : Rp " + total);
+
+
+        // PILIH PEMBAYARAN
+
+        System.out.println("\n===== METODE PEMBAYARAN =====");
+        System.out.println("1. Cash");
+        System.out.println("2. Online");
+
+        System.out.print("Pilih metode (1/2): ");
+        String metode = input.nextLine();
+
         Pembayaran pembayaran;
 
-        pembayaran = new PembayaranCash();
-        pembayaran.prosesPembayaran(50000);
+        if (metode.equals("1")) {
+            pembayaran = new PembayaranCash();
+        } else if (metode.equals("2")) {
+            System.out.print("Masukkan metode (OVO/DANA/GOPAY): ");
+            String metodeOnline = input.nextLine();
+            pembayaran = new PembayaranOnline(metodeOnline);
+        } else {
+            System.out.println("Pilihan tidak valid!");
+            return;
+        }
 
-        pembayaran = new PembayaranOnline("GOPAY");
-        pembayaran.prosesPembayaran(75000);
+
+        // 8. PROSES PEMBAYARAN
+        pembayaran.prosesPembayaran(total);
+
+        input.close();
     }
 }
